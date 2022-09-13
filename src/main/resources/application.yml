@@ -1,0 +1,46 @@
+##
+# Server
+##
+server:
+    error:
+        include-message: always
+        include-exception: false
+        include-stacktrace: on_param
+        include-binding-errors: always
+    port: 8080
+    servlet:
+        context-path: /oauth2-resourceserver-gestao-funcionarios
+
+##
+# Spring and DataSource
+##
+spring:
+    output:
+        ansi:
+            enabled: ALWAYS
+    datasource:
+        driverClassName: org.h2.Driver
+        url: jdbc:h2:mem:devdb
+        username: sa
+    h2:
+        console:
+            enabled: true
+    jpa:
+        generate-ddl: true
+        show-sql: true
+        open-in-view: false
+        properties:
+            hibernate:
+                format_sql: true
+        hibernate:
+            ddl-auto: update
+            dialect: org.hibernate.dialect.H2Dialect
+##
+# Spring Security - OAuth2 Resource Server
+##
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri:  http://localhost:18080/auth/realms/gestao-funcionarios
+                    jwk-set-uri: http://localhost:18080/auth/realms/gestao-funcionarios/protocol/openid-connect/certs
